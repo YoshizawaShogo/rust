@@ -1,0 +1,2 @@
+[build]
+target-dir = "Target" # 大文字にした理由は、create名が小文字であり、ソートした時に見つけやすいため。
