@@ -11,7 +11,7 @@ import socketserver
 
 IP_ADDRESS = "127.0.0.1" # localhost
 CANDIDATE_PORTS = range(8000, 8010) # 連続で使用すると、エラー("OSError: [Errno 98] Address already in use")が出たので対策した。
-TARGET_DIR = "project/Target" # project/.cargo/config.tomlのtarget-dirに対応
+TARGET_DIR = "project/target" # project/.cargo/config.tomlのtarget-dirに対応
 SETTINGS_HTML = TARGET_DIR + "/doc/settings.html"
 
 # extract </button><a class="sidebar-logo" href="???">

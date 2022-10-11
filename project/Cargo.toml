@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "helloworld",
+    "helloworld_from_other_create"
+    ]
