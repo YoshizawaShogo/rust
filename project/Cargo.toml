@@ -1,5 +1,9 @@
 [workspace]
 members = [
+    "evolutionary_algorithm",
     "helloworld",
-    "helloworld_from_other_create"
+    "helloworld_from_other_create",
+    "my_utils",
+    "practice",
+    "tips"
     ]
