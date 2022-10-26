@@ -51,7 +51,6 @@ impl PopulationEvolution for BasePopulation {
         use rand::Rng;
         let mut rng = rand::thread_rng();
         let individual_len = self.individuals.len();
-        
 
         for _ in 0..epoch {
             let mut next_poplation = Vec::new();
@@ -96,7 +95,7 @@ impl IndividualEvolution for BaseIndividual {
             let mut genes = Vec::with_capacity(genes_len);
             for i in 0..genes_len {
                 genes.push(
-                    factors[0].genes[i] + f_scale * (factors[1].genes[i] - factors[2].genes[i])
+                    factors[0].genes[i] + f_scale * (factors[1].genes[i] - factors[2].genes[i]),
                 );
             }
             //println!("{:?}", genes);
@@ -115,15 +114,15 @@ impl IndividualEvolution for BaseIndividual {
             let mut genes = Vec::with_capacity(genes_len);
             let cross_i = rng.gen_range(0, genes_len);
 
-
             for i in 0..genes_len {
-                genes.push( if rng.gen::<f32>() > crossover_rate  || i == cross_i {
-                    mutant_individual.genes[i]
-                    // if mutant_individual.genes[i] > 1.0 {
-
-                    // } else if mutant_individual.genes[i] < 0.0 {
-
-                    // }
+                genes.push(if rng.gen::<f32>() > crossover_rate || i == cross_i {
+                    if mutant_individual.genes[i] > 1.0 {
+                        1.0 - 0.1 * rng.gen::<f32>()
+                    } else if mutant_individual.genes[i] < 0.0 {
+                        0.1 * rng.gen::<f32>()
+                    } else {
+                        mutant_individual.genes[i]
+                    }
                 } else {
                     parent.genes[i]
                 });
