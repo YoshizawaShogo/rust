@@ -82,7 +82,7 @@ impl<TP: PopulationBaseEach<TI, TF>,
         let mut best_index: usize = 0;
         let mut best_value = self.get_individuals()[0].evaluate();
 
-        for (index, individual) in self.get_individuals().iter().skip(1).enumerate() {
+        for (index, individual) in self.get_individuals().iter().enumerate() {
             if individual.evaluate() < best_value {
                 best_index = index;
                 best_value = individual.evaluate();
@@ -108,7 +108,7 @@ impl<TP: PopulationBaseEach<TI, TF>,
 
 impl<TP: PopulationBaseEach<TI, TF> + PopulationBaseInterface<TI, TF>, 
      TI: IndividualBaseEach<TF> + IndividualBaseInterface<TF>, 
-     TF: Float + NumCast + AddAssign>
+     TF: Float + NumCast + AddAssign + Debug>
      PopulationBaseEvolutionParts<TI, TF> for TP
 where Standard: Distribution<TF>
 {
@@ -155,11 +155,12 @@ where Standard: Distribution<TF>
         for i in 0..genes_len{
             let mut gene = individuals[factor_indexes[0]].get_genes()[i];
             for j in 0..difference_vector_count {
-                let gene1 = individuals[1 + 2 * j].get_genes()[i];
-                let gene2 = individuals[1 + 2 * j + 1].get_genes()[i];
+                let gene1 = individuals[factor_indexes[1 + 2 * j]].get_genes()[i];
+                let gene2 = individuals[factor_indexes[1 + 2 * j + 1]].get_genes()[i];
 
                 gene += f_scale * (gene1 - gene2);
             }
+            //println!("{:?}", gene);
 
             // [0.0, 1.0]がパラメータの範囲なため、超えていた場合は範囲内に収まるように修正する
             if gene > num::cast(1.0).unwrap() {
@@ -190,6 +191,7 @@ impl<TP: PopulationBaseEach<TI, TF> + PopulationBaseEvolutionParts<TI, TF> + Clo
             let mut individuals = Vec::with_capacity(self.get_individuals().len());
             for individual in self.get_individuals() {
                 let mutant = self.de_generate_mutant(best_or_rand, difference_vector_count, f_scale);
+                // println!("hello");
                 let trial = individual.bin_cross(mutant, crossover_rate);
                 individuals.push(individual.compete(trial));
             }
