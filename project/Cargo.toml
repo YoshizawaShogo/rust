@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "evolutionary_algorithm",
+    "differential_evolution",
     "helloworld",
     "helloworld_from_other_create",
     "my_utils",
